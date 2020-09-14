@@ -27,9 +27,9 @@
             <ListView ItemsSource="{Binding FolderItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <Image></Image>
-                            <TextBlock Text="{Binding }"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16" Height="16" Source="{Binding Type}"/>
+                            <TextBlock  Text="{Binding Value}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -3,18 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using FileScanner.Models;
 
 namespace FileScanner.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
         private string selectedFolder;
-        private ObservableCollection<string> folderItems = new ObservableCollection<string>();
+        private ObservableCollection<Item> folderItems;
+
 
 
         private float stopwatch { get; set; }
@@ -27,10 +30,16 @@ namespace FileScanner.ViewModels
             }
         }
          
+
+
+
         public DelegateCommand<string> OpenFolderCommand { get; private set; }
         public DelegateCommand<string> ScanFolderCommand { get; private set; }
 
-        public ObservableCollection<string> FolderItems { 
+
+
+
+        public ObservableCollection<Item> FolderItems { 
             get => folderItems;
             set 
             { 
@@ -38,6 +47,9 @@ namespace FileScanner.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
+
 
         public string SelectedFolder
         {
@@ -50,17 +62,28 @@ namespace FileScanner.ViewModels
             }
         }
 
+
+
+
         public MainViewModel()
         {
+            FolderItems = new ObservableCollection<Item>();
             OpenFolderCommand = new DelegateCommand<string>(OpenFolder);
             ScanFolderCommand = new DelegateCommand<string>(ScanFolder, CanExecuteScanFolder);
             StopWatch = 0;
         }
 
+
+
+
         private bool CanExecuteScanFolder(string obj)
         {
             return !string.IsNullOrEmpty(SelectedFolder);
         }
+
+
+
+
 
         private void OpenFolder(string obj)
         {
@@ -73,36 +96,45 @@ namespace FileScanner.ViewModels
             }
         }
 
+
+
+
+
         private async void ScanFolder(string dir)
         {
             var watch = Stopwatch.StartNew();
 
             FolderItems = await Task.Run(() => GetDirFiles(dir));
 
-            foreach (var item in Directory.EnumerateFiles(dir, "*"))
-            {
-                 FolderItems.Add(item);
-            }
-
             StopWatch = watch.ElapsedMilliseconds;
 
         }
 
 
-        ObservableCollection<string> GetDirFiles(string dir)
+
+
+
+
+        ObservableCollection<Item> GetDirFiles(string dir)
         {
-            ObservableCollection<string> infos = new ObservableCollection<String>();
+            ObservableCollection<Item> infos = new ObservableCollection<Item>();
 
             foreach (var d in Directory.EnumerateDirectories(dir, "*"))
             {
-                infos.Add(d);
+                infos.Add(new Item { Value = d, Type = "/images/folder.png" });
 
                 foreach (var f in Directory.EnumerateFiles(d, "*"))
                 {
-                    infos.Add(f);
+                    infos.Add(new Item { Value = f, Type = "/images/file.png" });
                 }
 
             }
+
+            foreach (var d in Directory.EnumerateFiles(dir, "*"))
+            {
+                infos.Add(new Item { Value = d, Type = "/images/file.png" });
+
+                }
 
             return infos;
         }
