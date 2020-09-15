@@ -1,0 +1,11 @@
+Explication du listview databinding
+https://www.wpf-tutorial.com/listview-control/listview-data-binding-item-template/
+
+Video de Tim Corey sur les tâches asynchrônes
+https://www.youtube.com/watch?v=2moh18sh5p4
+
+Documentation sur Image.Source Property
+https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.image.source?view=netcore-3.1#System_Windows_Controls_Image_Source
+
+Image DataBinding StackOverflow
+https://stackoverflow.com/questions/21788855/binding-an-image-in-wpf-mvvm/39249987

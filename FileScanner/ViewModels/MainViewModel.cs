@@ -119,22 +119,29 @@ namespace FileScanner.ViewModels
         {
             ObservableCollection<Item> infos = new ObservableCollection<Item>();
 
-            foreach (var d in Directory.EnumerateDirectories(dir, "*"))
+            try
             {
-                infos.Add(new Item { Value = d, Type = "/images/folder.png" });
 
-                foreach (var f in Directory.EnumerateFiles(d, "*"))
+                foreach (var d in Directory.EnumerateDirectories(dir, "*"))
                 {
-                    infos.Add(new Item { Value = f, Type = "/images/file.png" });
+                    infos.Add(new Item { Value = d, Type = "/images/folder.png" });
+
+                    foreach (var f in Directory.EnumerateFiles(d, "*"))
+                    {
+                        infos.Add(new Item { Value = f, Type = "/images/file.png" });
+                    }
+
+                }
+
+                foreach (var d in Directory.EnumerateFiles(dir, "*"))
+                {
+                    infos.Add(new Item { Value = d, Type = "/images/file.png" });
+
                 }
 
             }
+            catch (Exception e) { System.Windows.MessageBox.Show(e.Message,"Error", MessageBoxButton.OK); }
 
-            foreach (var d in Directory.EnumerateFiles(dir, "*"))
-            {
-                infos.Add(new Item { Value = d, Type = "/images/file.png" });
-
-                }
 
             return infos;
         }
