@@ -9,3 +9,6 @@ https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.image.source
 
 Image DataBinding StackOverflow
 https://stackoverflow.com/questions/21788855/binding-an-image-in-wpf-mvvm/39249987
+
+MessageBox properties tutorial
+https://www.wpf-tutorial.com/dialogs/the-messagebox/
